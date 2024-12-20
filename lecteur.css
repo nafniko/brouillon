@@ -1,0 +1,135 @@
+*{
+    padding: 0;
+    margin: 0%;
+    border:none;
+}
+
+html body{
+    background-color: #3c3c3c;
+    font-family: Arial, sans-serif;
+    color: #fff;
+}
+
+.barre_lecture{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    background-color: #000000;
+    position: fixed;
+    bottom: 0;
+    box-shadow: 
+      0 0 10px #0ff, 
+      0 0 20px #0ff, 
+      0 0 30px #00f, 
+      0 0 40px #00f, 
+      0 0 50px #00f, 
+      0 0 75px #00f; 
+    animation: neon-flicker 1.5s infinite alternate;
+}
+.barre{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+   
+
+}
+.pochette{
+
+    max-width: 50px;
+    height: 50px;
+    padding:1%;
+}
+
+.info_musique{
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+gap: 10px;
+    max-width: 100px;
+}
+
+.controle{
+    display: flex;
+    align-items: center;
+    max-width: 300px;
+    height: 50px;
+    gap: 10px;
+}
+
+.btn{
+    padding: 10px;
+    max-width: 100px;
+    height: 35px;
+    border-radius: 50%;
+        background-color: #0ff;
+        box-shadow: 
+          0 0 10px #0ff, 
+          0 0 20px #0ff, 
+          0 0 30px #00f, 
+          0 0 40px #00f, 
+          0 0 50px #00f, 
+          0 0 75px #00f; 
+        animation: neon-flicker 1.5s infinite alternate;
+      }
+      
+
+
+.barre_progression{
+    display: flex;
+    width: 100%;
+    height: 10px;
+    background-color: aqua;
+
+}
+
+.temps_musique{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 2px;
+    width: 100%;
+}
+@keyframes neon-flicker {
+    0%, 100% {
+      box-shadow: 
+        0 0 5px #0ff, 
+        0 0 10px #0ff, 
+        0 0 20px #0ff, 
+        0 0 30px #00f, 
+        0 0 40px #00f, 
+        0 0 50px #00f, 
+        0 0 75px #00f;
+    }
+    50% {
+      box-shadow: 
+        0 0 2px #0ff, 
+        0 0 4px #0ff, 
+        0 0 8px #00f, 
+        0 0 15px #00f;
+    }
+  }
+  
+  .neon-text-animated {
+    color: #0ff;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  .barre_progression{
+    background-color: #0ff; /* Couleur principale */
+    box-shadow: 
+      0 0 10px #0ff, 
+      0 0 20px #0ff, 
+      0 0 30px #00f, 
+      0 0 40px #00f, 
+      0 0 50px #00f, 
+      0 0 75px #00f; /* Effet lumineux autour */
+    /* Optionnel : pour des bords arrondis */
+    animation: neon-flicker 1.5s infinite alternate;
+  }
+  
