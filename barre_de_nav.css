@@ -1,0 +1,57 @@
+/* Reset pour un style uniforme */
+body, ul, li, a {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Header principal */
+  .header {
+    background-color: #333; /* Couleur de fond */
+    padding: 10px 0; /* Espacement vertical */
+  }
+  
+  /* Navigation */
+  .navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Liste de navigation */
+  .navbar-list {
+    list-style: none;
+    display: flex;
+    gap: 20px; /* Espacement entre les liens */
+  }
+  
+  /* Élément de la liste */
+  .navbar-item {
+  }
+  
+  /* Liens */
+  .navbar-link {
+    text-decoration: none;
+    color: white; /* Couleur du texte */
+    font-size: 1rem; /* Taille de police */
+    padding: 10px 15px; /* Espacement interne */
+    border-radius: 5px; /* Bords arrondis */
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  /* Effet au survol */
+  .navbar-link:hover {
+    background-color: #555; /* Couleur au survol */
+    color: #fff;
+  }
+  
+  /* Lien actif */
+  .navbar-link.active {
+    background-color: #007bff; /* Couleur d'accentuation */
+    color: white;
+  }
+  

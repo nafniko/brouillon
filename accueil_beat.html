@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beats & Drumkits Store</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .hero {
+            background: url('hero-image.jpg') no-repeat center center/cover;
+            color: white;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        .card-beat {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Beats & Kits</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#beats">Beats</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#drumkits">Drums Kit</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#cart">Panier</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Découvrez Nos Beats Uniques</h1>
+        <p>Transformez vos créations avec nos beats et kits professionnels.</p>
+        <a href="#beats" class="btn btn-primary btn-lg">Explorer les Beats</a>
+    </section>
+
+    <!-- Beat Cards Section -->
+    <section id="beats" class="container my-5">
+        <h2 class="text-center mb-4">Nos Beats Populaires</h2>
+        <div class="row">
+            <!-- Beat Card 1 -->
+            <div class="col-md-4">
+                <div class="card card-beat">
+                    <img src="beat1.jpg" class="card-img-top" alt="Beat 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Trap Beat - 120 BPM</h5>
+                        <p class="card-text">Écoutez un son puissant pour vos projets Trap.</p>
+                        <a href="#" class="btn btn-primary">Pré-écouter</a>
+                        <a href="#cart" class="btn btn-success">Acheter</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Beat Card 2 -->
+            <div class="col-md-4">
+                <div class="card card-beat">
+                    <img src="beat2.jpg" class="card-img-top" alt="Beat 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Afrobeat - 100 BPM</h5>
+                        <p class="card-text">Un beat vibrant parfait pour les vibes Afro.</p>
+                        <a href="#" class="btn btn-primary">Pré-écouter</a>
+                        <a href="#cart" class="btn btn-success">Acheter</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Beat Card 3 -->
+            <div class="col-md-4">
+                <div class="card card-beat">
+                    <img src="beat3.jpg" class="card-img-top" alt="Beat 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Lo-fi Chill - 85 BPM</h5>
+                        <p class="card-text">Créez une ambiance chill avec ce beat unique.</p>
+                        <a href="#" class="btn btn-primary">Pré-écouter</a>
+                        <a href="#cart" class="btn btn-success">Acheter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
