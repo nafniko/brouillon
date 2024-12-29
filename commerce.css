@@ -1,0 +1,274 @@
+
+@import url('/clash-display.css');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    line-height: 1.42857143;
+    color: #0c0402;
+    background-color: #0c0402;
+    font-family: "Epilogue", serif;
+    font-optical-sizing: auto;
+    font-size: 2rem;
+    font-weight: bold;
+    font-style: normal;
+    
+}
+main{
+  border-top-right-radius: 30px;
+}
+
+.header{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+
+    background-color: black;
+
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-size: 2rem;
+    font-weight: 700;
+    font-style: normal;
+    font-family: "ClashDisplay-Bold", serif;
+    font-optical-sizing: auto;
+}
+
+.orange{
+    color: #ff5935;
+}
+
+.mynavbar{
+    display: flex;
+    width: 100%;
+    height: 100px;
+    background-color: #0c0402;
+    list-style-type: none;
+    justify-content: space-around;
+    align-items: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-bottom-right-radius: 10px;
+}
+.items{
+    color: #0c0402 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #0c0402;
+    list-style-type: none;
+    border-bottom-right-radius: 10px;
+}
+.bg{
+    background-color: #fdf7ec;
+}
+.menu{
+    display: flex;
+    width: 100%;
+    height: 100px;
+    background-color: #fdf7ec;
+    list-style-type: none;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    font-size: 16px;
+    gap: 150px;
+    padding-left: 50px;
+    padding-right: 50px;
+    margin: 0%;
+    border-top-right-radius: 30px;
+
+}
+.contact{
+    color: #fdf7ec !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #0c0402;
+    list-style-type: none;
+    border-bottom-left-radius: 30px;
+    margin: 0%;
+    padding: 0%;
+}
+a{
+    text-decoration: none;
+    color: #0c0402;
+}
+
+.hero{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    color: #ff5935;
+    padding: 50px;
+}
+.section2{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    color: #0c0402;
+    font-size: 2rem;
+    font-weight: 700;
+    font-style: normal;
+    font-family: "Epilogue", serif;
+    font-optical-sizing: auto;
+padding: 50px;
+
+}
+.white{
+    color: #fdf7ec;
+}
+
+.phrase{
+    color: #0c0402;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.slider {
+    position: relative;
+    width: 100%;
+    /* max-width: 900px; */
+    overflow: hidden;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+}
+.slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+.slide {
+    flex: 0 0 calc(100% / 3); /* Divise l'espace en 3 images visibles */
+    box-sizing: border-box;
+    padding: 10px;
+}
+.slide img {
+    width: 100%;
+    border-radius: 5px;
+}
+.navigation {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+.nav-btn {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+.nav-btn:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.logo-slider {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+    padding: 50px ;
+}
+.logo-track {
+    display: flex;
+    animation: scroll 10s linear infinite;
+}
+.logo {
+    flex: 0 0 auto;
+    width: 150px; /* Largeur de chaque logo */
+    padding: 10px;
+    text-align: center;
+}
+.logo img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+/* Animation de défilement */
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+/* Dupliquer le contenu pour effet infini */
+.logo-track:hover {
+    animation-play-state: paused; /* Pause au survol */
+}
+
+footer{
+    background-color: #0c0402;
+    width: 100%;
+    height: 100px;
+    border-top-left-radius : 10px;
+    border-top-right-radius : 10px;
+}
+
+.accordion{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    color: #0c0402;
+    font-size: 2rem;
+    font-weight: 700;
+    font-style: normal;
+    font-family: "Epilogue", serif;
+    font-optical-sizing: auto;
+}
+.accordion-item{
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+.accordion-button{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #fdf7ec;
+    cursor: pointer;
+}
+
+.accordion-content{
+    display: none;
+    padding: 10px;
+}
+.accordion-content.active{
+    display: block;
+}
+.faq{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    color: #0c0402;
+    font-size: 2rem;
+    font-weight: 700;
+    font-style: normal;
+    font-family: "Epilogue", serif;
+    font-optical-sizing: auto;
+    padding: 50px;
+}
