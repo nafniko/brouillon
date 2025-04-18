@@ -1,5 +1,5 @@
 class Card {
-    path = 'asset/son/';
+    path = '/brouillon/asset/son/';
   
     constructor(titre, artiste, audio, img) {
       this.titre = titre;

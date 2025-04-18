@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test PDF</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  <div id="facture">
+    <h1>Facture Test</h1>
+    <p>Date : 14/04/2025</p>
+    <p>Client : Jean Dupont</p>
+  </div>
+
+  <button onclick="downloadPDF()">Télécharger PDF</button>
+
+  <script>
+    function downloadPDF() {
+      const el = document.getElementById('facture')
+      html2pdf().from(el).save()
+    }
+  </script>
+</body>
+</html>
