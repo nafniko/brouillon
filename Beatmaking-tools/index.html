@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="synchro.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="visualizer">
+      <h1>Audio Synchronizer</h1>
+      <button id="startSync">Synchroniser et Jouer</button>
+
+      <div class="timeline">
+        <div class="track" id="mainTrack">
+          <span class="label">Main Track</span>
+          <div class="peak" id="mainPeak"></div>
+        </div>
+        <div class="track" id="harmonyTrack1">
+          <span class="label">Harmony 1</span>
+          <div class="peak" id="harmonyPeak1"></div>
+        </div>
+        <div class="track" id="harmonyTrack2">
+          <span class="label">Harmony 2</span>
+          <div class="peak" id="harmonyPeak2"></div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="synchro.js"></script>
+  </body>
+</html>

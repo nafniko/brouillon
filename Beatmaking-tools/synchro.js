@@ -67,3 +67,24 @@ document.getElementById('startSync').addEventListener('click', async () => {
     
     syncTracks(mainTrackBuffer, harmonyBuffers);
 });
+
+async function displayPeaks(mainBuffer, harmonyBuffers) {
+    const mainPeakTime = detectTransient(mainBuffer);
+    document.getElementById('mainPeak').style.left = (mainPeakTime * 100) + '%';
+
+    const harmonyPeak1Time = detectTransient(harmonyBuffers[0]);
+    document.getElementById('harmonyPeak1').style.left = (harmonyPeak1Time * 100) + '%';
+
+    const harmonyPeak2Time = detectTransient(harmonyBuffers[1]);
+    document.getElementById('harmonyPeak2').style.left = (harmonyPeak2Time * 100) + '%';
+}
+
+document.getElementById('startSync').addEventListener('click', async () => {
+    mainTrackBuffer = await loadAudio('mainTrack.mp3');
+    harmonyBuffers.push(await loadAudio('harmony1.mp3'));
+    harmonyBuffers.push(await loadAudio('harmony2.mp3'));
+
+    await displayPeaks(mainTrackBuffer, harmonyBuffers); // Affiche les pics
+    syncTracks(mainTrackBuffer, harmonyBuffers); // Lance la synchro
+});
+

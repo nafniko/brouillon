@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Synchronisation Vocale</title>
+    <style>
+      body {
+        background: #111;
+        color: #eee;
+        font-family: sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem;
+      }
+      button {
+        padding: 1rem 2rem;
+        margin: 1rem;
+        background: #0a84ff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      #waveform1,
+      #waveform2,
+      #waveform3 {
+        width: 1500px;
+        max-width: 800px;
+        height: 100px;
+        margin-bottom: 1rem;
+        background-color: #222;
+      }
+      .waveform-wrapper {
+        display: flex;
+        width: 80%;
+        flex-direction: column;
+        gap: 30px;
+        overflow-x: auto;
+        padding: 10px;
+        border: 1px solid #ccc;
+        margin-bottom: 30px;
+      }
+
+      .waveform-container {
+        flex: 0 0 auto;
+        height: 100px;
+        border: 1px solid #999;
+      }
+
+      button:hover {
+        background: #0066cc;
+      }
+      button:disabled {
+        background: #666;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Synchronisation Vocale (Style VocaLign)</h1>
+    <button id="syncButton">🔊 Lancer la synchronisation</button>
+    <button id="downloadButton" disabled>
+      💾 Télécharger les pistes synchronisées
+    </button>
+    <div class="waveform-wrapper">
+
+        <!-- Conteneur pour les vagueformes -->
+        <div id="waveform1"></div>
+        <!-- Pour la piste principale -->
+        <div id="waveform2"></div>
+        <!-- Pour une autre piste -->
+        <div id="waveform3"></div>
+    </div>
+    <!-- Pour une autre piste -->
+
+   
+
+    <script src="https://unpkg.com/wavesurfer.js@7"></script>
+    <script>
+      const context = new (window.AudioContext || window.webkitAudioContext)();
+      const files = [
+        "./asset/baby_1.mp3", // Piste principale
+        "./asset/baby_2.mp3",
+        "./asset/baby_4.mp3",
+      ];
+      const stretchedBuffers = [];
+
+      async function loadAudio(url) {
+        const res = await fetch(url);
+        const arrayBuffer = await res.arrayBuffer();
+        return context.decodeAudioData(arrayBuffer);
+      }
+
+      const waveformContainers = [
+        document.getElementById("waveform1"), // Conteneur de la 1ère piste
+        document.getElementById("waveform2"), // Conteneur de la 2ème piste
+        document.getElementById("waveform3"), // Conteneur de la 3ème piste
+      ];
+
+      async function displayWaveforms(buffersToUse = null) {
+        // Nettoyer les anciennes vagues
+        waveformContainers.forEach((container) => {
+          container.innerHTML = "";
+        });
+      
+        if (window.oldWavUrls) {
+          window.oldWavUrls.forEach((url) => URL.revokeObjectURL(url));
+        }
+        window.oldWavUrls = [];
+      
+        const buffers = buffersToUse || (await Promise.all(files.map(loadAudio)));
+      
+        buffers.forEach((buffer, index) => {
+          const duration = buffer.duration;
+          const pixelsPerSecond = 100;
+      
+          // ✅ ici : waveformContainers[index] est déjà un élément HTML
+          const container = waveformContainers[index];
+          container.style.width = `${duration * pixelsPerSecond}px`;
+      
+          // ✅ on crée WaveSurfer après avoir défini la largeur
+          const waveSurfer = WaveSurfer.create({
+            container: container,
+            waveColor: "rgb(200, 0, 200)",
+            progressColor: "black",
+            height: 100,
+            barWidth: 0,
+            responsive: true, // 👈 très important pour ne PAS scaler automatiquement
+          });
+         
+      
+          const wavBlob = bufferToWav(buffer);
+          const wavUrl = URL.createObjectURL(wavBlob);
+      
+          window.oldWavUrls.push(wavUrl);
+          waveSurfer.load(wavUrl);
+        });
+      }
+      
+
+      function detectTransients(buffer, threshold = 0.02) {
+        const channel = buffer.getChannelData(0);
+        const frameSize = 512;
+        const hopSize = 256;
+        const transients = [];
+
+        for (let i = 0; i < channel.length - frameSize; i += hopSize) {
+          const frame = channel.slice(i, i + frameSize);
+          const rms = Math.sqrt(
+            frame.reduce((acc, v) => acc + v * v, 0) / frame.length
+          );
+          if (rms > threshold) {
+            const time = i / buffer.sampleRate;
+            if (
+              transients.length === 0 ||
+              time - transients[transients.length - 1] > 0.1
+            ) {
+              transients.push(time);
+            }
+          }
+        }
+        return transients;
+      }
+
+      function stretchSegment(segment, factor) {
+        const newLength = Math.floor(segment.length * factor);
+        const newBuffer = context.createBuffer(
+          1,
+          newLength,
+          segment.sampleRate
+        );
+        const oldData = segment.getChannelData(0);
+        const newData = newBuffer.getChannelData(0);
+
+        for (let i = 0; i < newLength; i++) {
+          const srcIndex = i / factor;
+          const idx = Math.floor(srcIndex);
+          const frac = srcIndex - idx;
+          const val =
+            (1 - frac) * (oldData[idx] || 0) + frac * (oldData[idx + 1] || 0);
+          newData[i] = val;
+        }
+        return newBuffer;
+      }
+
+      function bufferToWav(audioBuffer) {
+        const numChannels = audioBuffer.numberOfChannels;
+        const sampleRate = audioBuffer.sampleRate;
+        const format = 1; // PCM
+        const bitsPerSample = 16;
+        const numFrames = audioBuffer.length;
+        const blockAlign = (numChannels * bitsPerSample) / 8;
+        const byteRate = sampleRate * blockAlign;
+        const dataSize = numFrames * blockAlign;
+        const buffer = new ArrayBuffer(44 + dataSize);
+        const view = new DataView(buffer);
+
+        function writeString(view, offset, string) {
+          for (let i = 0; i < string.length; i++) {
+            view.setUint8(offset + i, string.charCodeAt(i));
+          }
+        }
+
+        function write16(view, offset, value) {
+          view.setInt16(offset, value, true);
+        }
+
+        function write32(view, offset, value) {
+          view.setUint32(offset, value, true);
+        }
+
+        // RIFF chunk
+        writeString(view, 0, "RIFF");
+        write32(view, 4, 36 + dataSize);
+        writeString(view, 8, "WAVE");
+
+        // fmt subchunk
+        writeString(view, 12, "fmt ");
+        write32(view, 16, 16);
+        write16(view, 20, format);
+        write16(view, 22, numChannels);
+        write32(view, 24, sampleRate);
+        write32(view, 28, byteRate);
+        write16(view, 32, blockAlign);
+        write16(view, 34, bitsPerSample);
+
+        // data subchunk
+        writeString(view, 36, "data");
+        write32(view, 40, dataSize);
+
+        // Write audio samples
+        let offset = 44;
+        for (let i = 0; i < numFrames; i++) {
+          for (let channel = 0; channel < numChannels; channel++) {
+            let sample = audioBuffer.getChannelData(channel)[i];
+            sample = Math.max(-1, Math.min(1, sample));
+            view.setInt16(offset, sample * 0x7fff, true);
+            offset += 2;
+          }
+        }
+
+        return new Blob([buffer], { type: "audio/wav" });
+      }
+
+      async function syncAllTracks(buffers) {
+        stretchedBuffers.length = 0;
+        const [main, ...others] = buffers;
+        const mainTransients = detectTransients(main);
+
+        const mainStart = mainTransients[0] || 0;
+        const mainEnd =
+          mainTransients[mainTransients.length - 1] || main.duration;
+        const mainDuration = mainEnd - mainStart;
+
+        // Piste principale non modifiée
+        stretchedBuffers.push(main);
+
+        const mainSource = context.createBufferSource();
+        mainSource.buffer = main;
+        mainSource.connect(context.destination);
+        mainSource.start();
+
+        // Harmonisation des autres pistes
+        for (let i = 0; i < others.length; i++) {
+          const buf = others[i];
+          const tr = detectTransients(buf);
+          const start = tr[0] || 0;
+          const end = tr[tr.length - 1] || buf.duration;
+
+          const harmonyDuration = end - start;
+          const stretchFactor = mainDuration / harmonyDuration;
+
+          const startFrame = Math.floor(start * buf.sampleRate);
+          const endFrame = Math.floor(end * buf.sampleRate);
+          const segmentLength = endFrame - startFrame;
+          const harmonySegment = context.createBuffer(
+            1,
+            segmentLength,
+            buf.sampleRate
+          );
+          harmonySegment.copyToChannel(
+            buf.getChannelData(0).slice(startFrame, endFrame),
+            0
+          );
+
+          const stretched = stretchSegment(harmonySegment, stretchFactor);
+          stretchedBuffers.push(stretched);
+
+          const source = context.createBufferSource();
+          source.buffer = stretched;
+          source.connect(context.destination);
+          source.start();
+        }
+
+        document.getElementById("downloadButton").disabled = false; // Activer le bouton de téléchargement
+      }
+
+      document
+        .getElementById("syncButton")
+        .addEventListener("click", async () => {
+          const buffers = await Promise.all(files.map(loadAudio));
+          await syncAllTracks(buffers); // ça remplit stretchedBuffers
+          displayWaveforms(stretchedBuffers); // on affiche les "vraies" formes d’onde synchronisées
+        });
+
+      document
+        .getElementById("downloadButton")
+        .addEventListener("click", () => {
+          // Télécharger la piste principale
+          const mainWavBlob = bufferToWav(stretchedBuffers[0]);
+          const mainUrl = URL.createObjectURL(mainWavBlob);
+          const mainLink = document.createElement("a");
+          mainLink.href = mainUrl;
+          mainLink.download = "piste_principale.wav";
+          mainLink.click();
+
+          // Télécharger les autres pistes
+          stretchedBuffers.slice(1).forEach((buffer, index) => {
+            const wavBlob = bufferToWav(buffer);
+            const url = URL.createObjectURL(wavBlob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = `piste_${index + 2}.wav`;
+            link.click();
+          });
+        });
+
+      displayWaveforms(); // Afficher les vagueformes dès le départ
+    </script>
+  </body>
+</html>
