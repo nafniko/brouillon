@@ -47,6 +47,7 @@ export function renderMenu(container) {
           <h2 class="text-xl font-bold mb-4">Navigation</h2>
           <ul>
             <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#contact">Contact</a></li>
             <li><a href="#ventes">Ventes</a></li>
             <li><a href="#achats">Achats</a></li>
             <li><a href="#tva">TVA</a></li>

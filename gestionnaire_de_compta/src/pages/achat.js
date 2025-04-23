@@ -1,5 +1,5 @@
-import { renderAchatForm } from '../modules/achatForm.js'
-import { renderListeAchats, setAchats } from '../modules/achatList.js'
+import { renderAchatForm } from '../modules/Forms/achatForm.js'
+import { renderListeAchats, setAchats } from '../modules/List/achatList.js'
 import { achatDetails } from '../modules/achatDetails.js'
 
 export function showAchatPage(container) {

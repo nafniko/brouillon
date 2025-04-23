@@ -1,5 +1,5 @@
-import { renderVenteForm } from '../modules/venteForm.js'
-import { renderListeVentes, setVentes } from '../modules/venteList.js'
+import { renderVenteForm } from '../modules/Forms/venteForm.js'
+import { renderListeVentes, setVentes } from '../modules/List/venteList.js'
 import { venteDetails } from '../modules/venteDetails.js'
 
 export function showVentePage(container) {

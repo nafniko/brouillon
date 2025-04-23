@@ -1,13 +1,14 @@
 // src/pages/factures.js
 import { genererFactureHTML } from '../modules/factureGenerator.js'
+import { initFactureForm } from '../modules/Forms/factureForm.js'
 
 
 export function showFacturePage(container) {
   const facture = {
     numero: '2025-001',
     emetteur: {
-      nom: 'Mon Entreprise',
-      adresse: '123 Rue de la République, 75001 Paris',
+      nom: 'Commerce Emoi',
+      adresse: '22 rue pottier, 78150 le Chesnay-Rocquencourt',
       siret: '123 456 789 00010',
       tva: 'FR12 123456789'
     },
@@ -60,34 +61,20 @@ export function showFacturePage(container) {
     </div>
   `
 
-  const form = document.getElementById('factureForm')
-  const preview = document.getElementById('facturePreview')
-  const downloadBtn = document.getElementById('downloadBtn')
+ // ...
+const form = document.getElementById('factureForm')
+const preview = document.getElementById('facturePreview')
+const downloadBtn = document.getElementById('downloadBtn')
 
-  const updatePreview = () => {
-    facture.totalHt = facture.lignes.reduce((sum, l) => sum + l.qte * l.puHt, 0)
-    facture.totalTtc = facture.totalHt * (1 + facture.tva / 100)
-    preview.innerHTML = genererFactureHTML(facture)
-  
-  }
+const updatePreview = () => {
+  facture.totalHt = facture.lignes.reduce((sum, l) => sum + l.qte * l.puHt, 0)
+  facture.totalTtc = facture.totalHt * (1 + facture.tva / 100)
+  preview.innerHTML = genererFactureHTML(facture)
+}
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault()
-    facture.client.nom = document.getElementById('clientNom').value
-    facture.client.adresse = document.getElementById('clientAdresse').value
+// Utilisation du module formulaire
+initFactureForm(facture, updatePreview)
 
-    const ligne = {
-      description: document.getElementById('desc').value,
-      qte: Number(document.getElementById('qte').value),
-      puHt: Number(document.getElementById('pu').value)
-    }
-
-    if (ligne.qte && ligne.puHt) {
-      facture.lignes.push(ligne)
-      updatePreview()
-    //   form.reset()
-    }
-  })
 
 
   

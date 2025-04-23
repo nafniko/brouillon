@@ -2,6 +2,7 @@ import { showTvaPage } from "./pages/tva.js";
 import { showVentePage } from "./pages/vente.js"; // Décommente cette ligne lorsque tu veux utiliser la page vente.
 import { showAchatPage } from "./pages/achat.js"; // Décommente cette ligne lorsque tu veux utiliser la page vente.
 import { showFacturePage } from './pages/factures.js'
+import { showContactsPage } from "./pages/contact.js"; // Décommente cette ligne lorsque tu veux utiliser la page contact.
 
 export function loadPage() {
   // Récupérer le hash actuel de l'URL (ou "#dashboard" si aucun hash n'est spécifié)
@@ -10,6 +11,15 @@ export function loadPage() {
 
   // Switch pour charger le contenu de la page en fonction du hash
   switch (hash) {
+    case "#devis":
+      // Afficher la page Devis (en attente de la mise en place de la page devis)
+      content.innerHTML = "<h2 class='text-2xl'>Devis</h2>";
+      break;
+    case "#contact":
+      // Afficher la page Contact
+      showContactsPage(content);
+      break;
+
     case "#tva":
       // Afficher la page TVA
       showTvaPage(content);

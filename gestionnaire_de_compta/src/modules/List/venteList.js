@@ -1,34 +1,35 @@
-// gestionnaire_de_compta/src/modules/achatList.js
-import { afficherDetails } from './achatDetails.js'
+// src/components/venteList.js
+// src/components/venteList.js
+import { afficherDetails } from '../venteDetails.js'
 
 
-export function ajouterAchat(achat) {
-    achats.push(achat);
+export function ajouterVente(vente) {
+    ventes.push(vente);
     updateListe();
 }
-export let achats = [];
+export let ventes = [];
 let currentPage = 1
-const achatsParPage = 5
+const ventesParPage = 5
 
-export function setAchats(data) {
-  achats = data
+export function setVentes(data) {
+  ventes = data
 }
 
-function getPaginatedachats() {
-  const start = (currentPage - 1) * achatsParPage
-  const end = start + achatsParPage
-  return achats.slice(start, end)
+function getPaginatedVentes() {
+  const start = (currentPage - 1) * ventesParPage
+  const end = start + ventesParPage
+  return ventes.slice(start, end)
 }
 
 function updateList(container) {
   const ul = container.querySelector('ul')
   ul.innerHTML = ''
 
-  getPaginatedachats().forEach((achat, index) => {
+  getPaginatedVentes().forEach((vente, index) => {
     const li = document.createElement('li')
     li.className = 'cursor-pointer hover:bg-gray-100 p-2 rounded'
-    li.textContent = `${achat.date} - ${achat.societe}`
-    li.onclick = () => afficherDetails(achat)
+    li.textContent = `${vente.date} - ${vente.societe}`
+    li.onclick = () => afficherDetails(vente)
     ul.appendChild(li)
   })
 }
@@ -37,7 +38,7 @@ function updatePagination(container) {
   const pagination = container.querySelector('.pagination')
   pagination.innerHTML = ''
 
-  const totalPages = Math.ceil(achats.length / achatsParPage)
+  const totalPages = Math.ceil(ventes.length / ventesParPage)
 
   const prevBtn = document.createElement('button')
   prevBtn.textContent = '← Précédent'
@@ -63,7 +64,7 @@ function updatePagination(container) {
   pagination.appendChild(nextBtn)
 }
 
-export function renderListeAchats() {
+export function renderListeVentes() {
   const container = document.createElement('div')
   container.className = 'bg-white p-4 rounded shadow'
 
@@ -90,12 +91,12 @@ export function renderListeAchats() {
 
 function updateListe() {
   ul.innerHTML = '';
-  achats.forEach((achat, index) => {
+  ventes.forEach((vente, index) => {
     const li = document.createElement('li');
     li.className = 'cursor-pointer p-2 hover:bg-gray-100 border-b';
-    li.textContent = `${achat.societe} - ${achat.montantTtc.toFixed(2)} €`;
+    li.textContent = `${vente.societe} - ${vente.montantTtc.toFixed(2)} €`;
     li.addEventListener('click', () => {
-      afficherDetails(achat);
+      afficherDetails(vente);
     });
     ul.appendChild(li);
   });
