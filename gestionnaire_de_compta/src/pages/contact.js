@@ -1,13 +1,25 @@
-// src/pages/contacts.js
-import { afficherContacts } from '../modules/List/contactList.js'
+import { afficherContacts } from '../modules/List/contactList.js';
+import { fetchAll } from '../requeteApi/fetchAll.js';
+import { createClientForm } from '../modules/Forms/clientForm.js';
 
-export function showContactsPage(container) {
-  const fakeContacts = [
-    { nom: 'Alice Dupont', email: 'alice@example.com', telephone: '0601020304', societe:'Novalis', adresse:'1 rue de la Paix' },
-    { nom: 'Bob Martin', email: 'bob@example.com', telephone: '0611223344' },
-    { nom: 'Carla Moreau', email: 'carla@example.com', telephone: '0655667788' }
-  ]
+export async function showContactsPage(container) {
+  // Récupérer les contacts depuis l'API
+  const contacts = await fetchAll("http://127.0.0.1:8000/api/client/all");
 
-  container.innerHTML = `<div id="contactsContainer" class="p-4 bg-white rounded shadow"></div>`
-  afficherContacts('contactsContainer', fakeContacts)
+
+
+  // Préparer le conteneur pour afficher les contacts
+  container.innerHTML = `
+   <div class="flex flex-col lg:flex-row gap-4 p-4">
+  <div id="contactsContainer" class="p-4 bg-white rounded mb-4 shadow"></div>
+  <div id="contactContainer" class="p-4 bg-white rounded shadow"></div>
+  </div>
+  `;
+
+  // Afficher le formulaire de gestion de client
+  
+  // Afficher les contacts dans le conteneur
+  createClientForm('contactsContainer', null); // Créer le formulaire de gestion de client (pour ajouter ou modifier un client)
+  afficherContacts('contactContainer', contacts);
 }
+
